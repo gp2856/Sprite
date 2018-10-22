@@ -38,10 +38,43 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		const auto e = wnd.kbd.ReadKey();
+		if (e.IsRelease())
+		{
+			if (e.GetCode() == VK_SPACE)
+			{
+				link.ActivateEffect();
+			}
+		}
+	}
+	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	{
+		link.SetDirection({ -1,0 });
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	{
+		link.SetDirection({ 1,0 });
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_UP))
+	{
+		link.SetDirection({ 0,-1 });
+	}
+	else if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	{
+		link.SetDirection({ 0,1 });
+	}
+	else
+	{
+		link.SetDirection({ 0,0 });
+	}
 	link.Update(ft.Mark());
 }
 
 void Game::ComposeFrame()
 {
-	link.Draw({ wnd.mouse.GetPosX(), wnd.mouse.GetPosY() }, gfx);
+	text.DrawText("Effect Timer: \n" + std::to_string(link.GetEffectTimer()) +
+		"\nEffect Active: " + std::to_string(link.GetEffectActive()), { 0, 0 }, Colors::White, gfx);
+	link.Draw(gfx);
 }

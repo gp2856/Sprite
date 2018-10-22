@@ -25,11 +25,18 @@ public:
 	void Draw(Graphics& gfx) const;
 	void SetDirection(const Vec2& dir);
 	void Update(float dt);
+	void ActivateEffect();
+
+	float GetEffectTimer();
+	bool GetEffectActive();
 private:
 	const Surface& sprite;
 	Vec2 pos;
 	Vec2 vel = { 0.0f, 0.0f };
 	float speed = 110.0f;
+	float effectTimer = 0.0f;
+	float effectHoldTime = 0.25f;
+	bool effectActive = false;
 	std::vector<Animation> animations;
 	Sequence iCurrentSequence = Sequence::StandingDown;
 };

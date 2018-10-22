@@ -24,9 +24,10 @@
 #include "Mouse.h"
 #include "Graphics.h"
 #include "Surface.h"
-#include "Animation.h"
 #include "Colors.h"
 #include "FrameTimer.h"
+#include "Character.h"
+#include "Font.h"
 
 class Game
 {
@@ -48,6 +49,7 @@ private:
 	/*  User Variables              */
 	FrameTimer ft;
 	Surface surf = Surface( "link90x90.bmp" );
-	Animation link = Animation(0, 0, 90, 90, 5, surf, 0.25f, Colors::Magenta);
+	Character link = Character({ 100, 100 }, surf);
+	Font text = "FixedSys16x28.bmp";
 	/********************************/
 };

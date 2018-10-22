@@ -17,7 +17,14 @@ Character::Character(const Vec2 & pos, const Surface& sprite)
 
 void Character::Draw(Graphics & gfx) const
 {
-	animations[(int)iCurrentSequence].Draw((Vei2)pos, gfx);
+	if (effectActive)
+	{
+		animations[(int)iCurrentSequence].DrawSubstitute((Vei2)pos, gfx, Colors::Red);
+	}
+	else
+	{
+		animations[(int)iCurrentSequence].Draw((Vei2)pos, gfx);
+	}
 }
 
 void Character::SetDirection(const Vec2 & dir)
@@ -64,4 +71,28 @@ void Character::Update(float dt)
 {
 	pos += vel * dt;
 	animations[(int)iCurrentSequence].Update(dt);
+	if (effectActive)
+	{
+		effectTimer += dt;
+		if (effectTimer >= effectHoldTime)
+		{
+			effectTimer -= effectHoldTime;
+			effectActive = false;
+		}
+	}
+}
+
+void Character::ActivateEffect()
+{
+	effectActive = true;
+}
+
+float Character::GetEffectTimer()
+{
+	return effectTimer;
+}
+
+bool Character::GetEffectActive()
+{
+	return effectActive;
 }
