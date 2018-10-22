@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Vei2.h"
 class Vec2
 {
 public:
@@ -15,6 +15,7 @@ public:
 	float GetLengthSq() const;
 	Vec2& Normalize();
 	Vec2 GetNormalized() const;
+	explicit operator Vei2() const;
 public:
 	float x;
 	float y;
