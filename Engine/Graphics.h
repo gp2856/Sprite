@@ -59,6 +59,7 @@ public:
 		PutPixel( x,y,{ unsigned char( r ),unsigned char( g ),unsigned char( b ) } );
 	}
 	void PutPixel( int x,int y,Color c );
+	Color GetPixel(int x, int y) const;
 	void DrawSpriteNonChroma( int x,int y,const Surface& s );
 	void DrawSpriteNonChroma( int x,int y,const RectI& srcRect,const Surface& s );
 	void DrawSpriteNonChroma( int x,int y,RectI srcRect,const RectI& clip,const Surface& s );
@@ -68,6 +69,11 @@ public:
 	void DrawSpriteSubstitute(int x, int y, const Surface& s, Color substitute, Color chroma = Colors::Magenta);
 	void DrawSpriteSubstitute(int x, int y, const RectI& srcRect, const Surface& s, Color substitute, Color chroma = Colors::Magenta);
 	void DrawSpriteSubstitute(int x, int y, RectI srcRect, const RectI& clip, const Surface& s, Color substitute, Color chroma = Colors::Magenta);
+	void DrawSpriteGhost(int x, int y, const Surface& s, float alpha, Color chroma = Colors::Magenta);
+	void DrawSpriteGhost(int x, int y, const RectI& srcRect, const Surface& s, float alpha, Color chroma = Colors::Magenta);
+	void DrawSpriteGhost(int x, int y, RectI srcRect, const RectI& clip, const Surface& s, float alpha, Color chroma = Colors::Magenta);
+	unsigned char Blend(unsigned char newColor, unsigned char oldColor, float alpha) const;
+	Color BlendAlpha(Color newColor, Color oldColor, float alpha) const;
 	~Graphics();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;

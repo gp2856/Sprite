@@ -26,7 +26,6 @@ public:
 	void SetDirection(const Vec2& dir);
 	void Update(float dt);
 	void ActivateEffect();
-
 	float GetEffectTimer();
 	bool GetEffectActive();
 private:

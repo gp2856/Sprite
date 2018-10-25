@@ -69,6 +69,7 @@ void Game::UpdateModel()
 	{
 		link.SetDirection({ 0,0 });
 	}
+
 	link.Update(ft.Mark());
 }
 
@@ -77,4 +78,6 @@ void Game::ComposeFrame()
 	text.DrawText("Effect Timer: \n" + std::to_string(link.GetEffectTimer()) +
 		"\nEffect Active: " + std::to_string(link.GetEffectActive()), { 0, 0 }, Colors::White, gfx);
 	link.Draw(gfx);
+	
+	
 }

@@ -15,15 +15,15 @@ Animation::Animation( int x,int y,int width,int height,int count,
 
 void Animation::Draw( const Vei2& pos,Graphics& gfx ) const
 {
-	gfx.DrawSprite(pos.x, pos.y, frames[iCurFrame], sprite, chroma);
+	gfx.DrawSpriteGhost(pos.x, pos.y, frames[iCurFrame], sprite, 0.45f, chroma);
 }
 
 void Animation::Draw( const Vei2& pos,Graphics& gfx,const RectI& clip ) const
 {
-	gfx.DrawSprite( pos.x,pos.y,frames[iCurFrame],clip,sprite,chroma );
+	gfx.DrawSpriteGhost( pos.x,pos.y,frames[iCurFrame],clip,sprite, 0.45f, chroma );
 }
 
-void Animation::DrawSubstitute(const Vei2 & pos, Graphics & gfx, Color substitute) const
+void Animation::Draw(const Vei2 & pos, Graphics & gfx, Color substitute) const
 {
 	gfx.DrawSpriteSubstitute(pos.x, pos.y, frames[iCurFrame], sprite, substitute, chroma);
 }

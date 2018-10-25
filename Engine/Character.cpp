@@ -19,7 +19,7 @@ void Character::Draw(Graphics & gfx) const
 {
 	if (effectActive)
 	{
-		animations[(int)iCurrentSequence].DrawSubstitute((Vei2)pos, gfx, Colors::Red);
+		animations[(int)iCurrentSequence].Draw((Vei2)pos, gfx, Colors::Red);
 	}
 	else
 	{

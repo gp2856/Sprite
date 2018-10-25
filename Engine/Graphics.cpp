@@ -242,6 +242,10 @@ Graphics::Graphics( HWNDKey& key )
 
 
 
+
+
+
+
 Graphics::~Graphics()
 {
 	// free sysbuffer memory (aligned free)
@@ -320,9 +324,19 @@ void Graphics::PutPixel( int x,int y,Color c )
 	assert( x < int( Graphics::ScreenWidth ) );
 	assert( y >= 0 );
 	assert( y < int( Graphics::ScreenHeight ) );
+	
 	pSysBuffer[Graphics::ScreenWidth * y + x] = c;
 }
 
+Color Graphics::GetPixel(int x, int y) const
+{
+	assert(x >= 0);
+	assert(x < int(Graphics::ScreenWidth));
+	assert(y >= 0);
+	assert(y < int(Graphics::ScreenHeight));
+
+	return pSysBuffer[Graphics::ScreenWidth * y + x];
+}
 void Graphics::DrawSpriteNonChroma( int x,int y,const Surface& s )
 {
 	DrawSpriteNonChroma( x,y,s.GetRect(),s );
@@ -458,6 +472,70 @@ void Graphics::DrawSpriteSubstitute(int x, int y, RectI srcRect, const RectI & c
 		}
 	}
 }
+
+void Graphics::DrawSpriteGhost(int x, int y, const Surface & s, float alpha, Color chroma)
+{
+	DrawSpriteGhost(x, y, s.GetRect(), s, alpha, chroma);
+}
+
+void Graphics::DrawSpriteGhost(int x, int y, const RectI & srcRect, const Surface & s, float alpha, Color chroma)
+{
+	DrawSpriteGhost(x, y, srcRect, GetScreenRect(), s, alpha, chroma);
+}
+
+void Graphics::DrawSpriteGhost(int x, int y, RectI srcRect, const RectI & clip, const Surface & s, float alpha, Color chroma)
+{
+	assert(srcRect.left >= 0);
+	assert(srcRect.right <= s.GetWidth());
+	assert(srcRect.top >= 0);
+	assert(srcRect.bottom <= s.GetHeight());
+	if (x < clip.left)
+	{
+		srcRect.left += clip.left - x;
+		x = clip.left;
+	}
+	if (y < clip.top)
+	{
+		srcRect.top += clip.top - y;
+		y = clip.top;
+	}
+	if (x + srcRect.GetWidth() > clip.right)
+	{
+		srcRect.right -= x + srcRect.GetWidth() - clip.right;
+	}
+	if (y + srcRect.GetHeight() > clip.bottom)
+	{
+		srcRect.bottom -= y + srcRect.GetHeight() - clip.bottom;
+	}
+	for (int sy = srcRect.top; sy < srcRect.bottom; sy++)
+	{
+		for (int sx = srcRect.left; sx < srcRect.right; sx++)
+		{
+			Color srcPixel = s.GetPixel(sx, sy);
+			Color oldPixel = GetPixel(x + sx - srcRect.left, y + sy - srcRect.top);
+			Color blendedPixel = BlendAlpha(srcPixel, oldPixel, alpha);
+			if (srcPixel != chroma)
+			{
+				PutPixel(x + sx - srcRect.left, y + sy - srcRect.top, blendedPixel);
+			}
+		}
+	}
+}
+
+unsigned char Graphics::Blend(unsigned char newColor, unsigned char oldColor, float alpha) const
+{
+	return (unsigned char) (newColor * alpha) + (1 - alpha) * oldColor;
+}
+
+Color Graphics::BlendAlpha(Color newColor, Color oldColor, float alpha) const
+{
+	return {
+		Blend(newColor.GetR(), oldColor.GetR(), alpha),
+		Blend(newColor.GetG(), oldColor.GetG(), alpha),
+		Blend(newColor.GetB(), oldColor.GetB(), alpha)
+	};
+}
+
 
 
 //////////////////////////////////////////////////
