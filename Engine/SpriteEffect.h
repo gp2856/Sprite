@@ -54,18 +54,20 @@ namespace SpriteEffect
 	class Ghost
 	{
 	public:
-		Ghost(Color c, float alpha)
+		Ghost(Color cDest, Color chroma, float alpha)
 			:
-			chroma(c),
+			chroma(chroma),
+			cDest(cDest),
 			alpha(alpha)
 		{}
 
-		void operator() (Color cSrc, Color cDest, int xDest, int yDest, Graphics& gfx) const
+		void operator() (Color cSrc, int xDest, int yDest, Graphics& gfx) const
 		{
 			Color blendedColor = { Blend(cSrc.GetR(), cDest.GetR()), Blend(cSrc.GetG(), cDest.GetG()), Blend(cSrc.GetB(), cDest.GetB()) };
 		}
 	private:
 		Color chroma;
+		Color cDest;
 		float alpha;
 
 		unsigned char Blend(unsigned char newColor, unsigned char oldColor) const
