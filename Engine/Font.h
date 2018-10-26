@@ -1,6 +1,6 @@
 #pragma once
 #include "Vec2.h"
-#include "RectI.h"
+#include "Rect.h"
 #include "Graphics.h"
 #include "Surface.h"
 #include "Colors.h"
