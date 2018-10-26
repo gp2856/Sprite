@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character(const Vec2 & pos, const Surface& sprite)
+Character::Character(const Vec2& pos, const Surface& sprite)
 	:
 	pos(pos),
 	sprite(sprite)
@@ -23,7 +23,7 @@ void Character::Draw(Graphics & gfx) const
 	}
 	else
 	{
-		animations[(int)iCurrentSequence].Draw((Vei2)pos, gfx);
+		animations[(int)iCurrentSequence].Draw(pos, gfx);
 	}
 }
 

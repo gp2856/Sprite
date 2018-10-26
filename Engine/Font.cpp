@@ -12,7 +12,7 @@ Font::Font(const std::string & filename, Color chroma)
 	assert(glyphWidth * nColumns == surface.GetWidth());
 }
 
-void Font::DrawText(const std::string & text, const Vei2 & pos, Color color, Graphics & gfx) const
+void Font::DrawText(const std::string & text, const Vei2& pos, Color color, Graphics & gfx) const
 {
 	auto curPos = pos;
 	for (auto c : text)

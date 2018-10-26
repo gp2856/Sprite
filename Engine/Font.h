@@ -1,5 +1,5 @@
 #pragma once
-#include "Vei2.h"
+#include "Vec2.h"
 #include "RectI.h"
 #include "Graphics.h"
 #include "Surface.h"

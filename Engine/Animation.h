@@ -2,6 +2,7 @@
 
 #include "Surface.h"
 #include "Graphics.h"
+#include "Vec2.h"
 #include <vector>
 
 class Animation
